@@ -24,7 +24,7 @@ In this scenario, you don't have to put in any of your own money upfront. You si
     # copy over the template
     $ cp grants_private.template.rb grants_private.rb
 
-   # input your grants here
+    # input your grants here
     $ vim grants_private.rb
 
     # run the script!
