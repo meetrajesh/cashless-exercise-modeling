@@ -33,8 +33,15 @@ In this scenario, you don't have to put in any of your own money upfront. You si
 
 # Pull Reqeusts
 
-If you can make this tool better, please do! Fork the repo, and submit a pull request for review.
+If you can make this tool better, please do! Fork the repo, and submit a pull request for review. Bug fixes also welcome.
+
+
+# TODO
+
+ * This script assumes you're tax filing status is Married Filing Jointly. It would be nice to also support Single filing, as many young people in their 20s and early 30s can still be unmarried.
 
 # Disclaimer
 
-I'm no tax professional, and don't have any accounting, finance, or tax degress. Use this at your own risk. These scripts are provided solely for personal use, and is not meant as tax advise. Use this tool to get a general idea, and then go talk to a real Certified Financial Planner (CFP), CPA, or tax specialist before you make any decisions. This script also doesn't claim your company's stock price will always go up, even if it assumes it.
+I'm **not** a tax professional, and don't have a accounting, finance, or tax degree. Use this tool and scripts at your own risk. The math has **NOT** been verified by a finance or tax professional.
+
+These scripts are provided solely for personal use, and is not meant to be seen as tax advice. Use this tool to get a general idea, and then go talk to a real Certified Financial Planner (CFP), CPA, or tax specialist before you make any decisions to sell, not sell, or exercise any stock options / shares. This script also doesn't claim your company's stock price will always go up monotonically, even if it may assume it in some calculations.
