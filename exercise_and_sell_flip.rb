@@ -6,7 +6,7 @@ module ExerciseAndSellFlip
 
   def default_num_options_flipped_rightaway
     # for now, as a default, assume all NSOs will be flipped, and all ISOs and RSUs will be exercised & held, unless stated otherwise in the inputs
-    nso? ? @num_options : 0
+    nso? || rsu? ? @num_options : 0
   end  
 
   def net_profit_on_flip
