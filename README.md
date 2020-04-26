@@ -36,7 +36,7 @@ In this scenario, you don't have to put in any of your own money upfront. You si
 If you can make this tool better, please do! Fork the repo, and submit a pull request for review. Bug fixes also welcome.
 
 
-# TODO
+# Todo
 
  * This script assumes you're tax filing status is Married Filing Jointly. It would be nice to also support Single filing, as many young people in their 20s and early 30s can still be unmarried.
 
