@@ -91,7 +91,12 @@ module TaxCalculators
 
   def self.calculate_medicare_tax(income)
     base_tax = income * MEDICARE_TAX_RATE
-    additional_tax = (income < MEDICARE_ADDITIONAL_THRESHOLD) ? 0 : (income - MEDICARE_ADDITIONAL_THRESHOLD) * MEDICARE_ADDITIONAL_RATE
+
+    additional_tax = if (income < MEDICARE_ADDITIONAL_THRESHOLD)
+      0
+    else
+      (income - MEDICARE_ADDITIONAL_THRESHOLD) * MEDICARE_ADDITIONAL_RATE
+    end
 
     base_tax + additional_tax
   end
@@ -108,7 +113,7 @@ module TaxCalculators
   # AMT constants
   AMT_EXEMPTION_AMOUNT = 113_400
   AMT_PHASEOUT_THRESHOLD = 1_036_800
-  AMT_HIGHER_28_PERCENT_RATE_THRESHOLD = 197_900
+  AMT_HIGHER_PERCENT_RATE_THRESHOLD = 197_900
 
   def self.calculate_tentative_minimum_tax(amt_income)
     return 0 if amt_income < AMT_EXEMPTION_AMOUNT
@@ -122,10 +127,10 @@ module TaxCalculators
     exemption_amount = 0 if exemption_amount < 0
     amt_income -= exemption_amount
 
-    if amt_income < AMT_HIGHER_28_PERCENT_RATE_THRESHOLD
+    if amt_income < AMT_HIGHER_PERCENT_RATE_THRESHOLD
       amt_income * 0.26
     else
-      (0.28 * amt_income) - (0.02 * AMT_HIGHER_28_PERCENT_RATE_THRESHOLD)
+      (0.28 * amt_income) - (0.02 * AMT_HIGHER_PERCENT_RATE_THRESHOLD)
     end
   end
 end
