@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # ASSUME married filing jointly (MFJ)
+# ASSUME 2020 tax rates, thresholds, and amounts
 module TaxCalculators
 
   def self.compute_all_taxes(income)
