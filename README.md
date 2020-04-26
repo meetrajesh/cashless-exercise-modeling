@@ -38,7 +38,9 @@ If you can make this tool better, please do! Fork the repo, and submit a pull re
 
 # Todo
 
- * This script assumes you're tax filing status is Married Filing Jointly. It would be nice to also support Single filing, as many young people in their 20s and early 30s can still be unmarried.
+  * This script assumes you're tax filing status is Married Filing Jointly. It would be nice to also support Single filing, as many young people in their 20s and early 30s are likely still unmarried.
+
+  * Write unit tests :)
 
 # Disclaimer
 
