@@ -3,19 +3,7 @@
 require './helpers.rb'
 require './stock_option_grant.rb'
 require './grants_private.rb'
-
-# Assume married filing jointly
-# Assume little to no base salary in the year lockup expires. ie. lockup expires early Jan or Feb, and then both spouses quit their jobs right after
-BASE_SALARY = 0 
-
-# compute ordinary income rate and set it for everyone
-pretax_flip_income = GRANTS.sum(&:pretax_flip_income)
-nso_rsu_pretax_exercise_income = GRANTS.sum(&:nso_rsu_pretax_exercise_income)
-overall_ordinary_income_tax_rate = TaxCalculators.compute_overall_tax_rate(pretax_flip_income + nso_rsu_pretax_exercise_income)
-GRANTS.each { |g| g.overall_ordinary_income_tax_rate = overall_ordinary_income_tax_rate }
-
-# disallow future edits to the grants
-GRANTS.map(&:freeze)
+require './compute_ordinary_income_tax_rate.rb'
 
 money_incoming = GRANTS.sum(&:net_profit_on_flip)
 money_outgoing = GRANTS.sum(&:total_cost_to_exercise_with_taxes)
@@ -28,11 +16,11 @@ puts "Net cash incoming: #{cur(money_incoming - money_outgoing)}"
 puts
 
 # calculate AMT payable for ISOs
-regular_income     = BASE_SALARY + GRANTS.sum { |g| g.pretax_flip_income + g.nso_rsu_pretax_exercise_income }
+regular_income     = FINAL_YEAR_BASE_SALARY + GRANTS.sum { |g| g.pretax_flip_income + g.nso_rsu_pretax_exercise_income }
 regular_income_tax = TaxCalculators.calculate_federal_tax(regular_income)
 regular_income_tax_rate = regular_income_tax / regular_income.to_f
 
-amt_income             = BASE_SALARY + GRANTS.sum { |g| g.pretax_flip_income + g.income_for_amt_calculation }
+amt_income             = FINAL_YEAR_BASE_SALARY + GRANTS.sum { |g| g.pretax_flip_income + g.income_for_amt_calculation }
 tmt_tax                = TaxCalculators.calculate_tentative_minimum_tax(amt_income)
 $effective_amt_tax_rate = (tmt_tax / amt_income.to_f * 100.0).round(2)
 $final_added_amt        = [0, (tmt_tax - regular_income_tax)].max

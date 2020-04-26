@@ -51,6 +51,7 @@ you are left with an after-tax value of #{cur(after_tax_value)} a number of year
 
 By this time we assume you have moved out of pricey California, and so you don't owe 
 taxes in California for the final sale of shares.
+
 "
 
 
