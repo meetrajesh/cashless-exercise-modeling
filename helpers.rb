@@ -10,8 +10,8 @@ end
 
 class Array
   def sum(&proc)
-  	if proc
-  	  map(&proc).inject(&:+)
+    if proc
+      map(&proc).inject(&:+)
     else
       inject(&:+)
     end

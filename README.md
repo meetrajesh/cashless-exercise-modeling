@@ -21,6 +21,20 @@ In this scenario, you don't have to put in any of your own money upfront. You si
 
 # How to Use
 
-$ cp grants_private.template.rb grants_private.rb # copy over template
-$ vim grants_private.rb # make your edits here
-$ ruby main.rb # run the script!
+    # copy over the template
+    $ cp grants_private.template.rb grants_private.rb
+
+   # input your grants here
+    $ vim grants_private.rb
+
+    # run the script!
+    $ ruby main.rb
+
+
+# Pull Reqeusts
+
+If you can make this tool better, please do! Fork the repo, and submit a pull request for review.
+
+# Disclaimer
+
+I'm no tax professional, and don't have any accounting, finance, or tax degress. Use this at your own risk. These scripts are provided solely for personal use, and is not meant as tax advise. Use this tool to get a general idea, and then go talk to a real Certified Financial Planner (CFP), CPA, or tax specialist before you make any decisions. This script also doesn't claim your company's stock price will always go up, even if it assumes it.
