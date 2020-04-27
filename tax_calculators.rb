@@ -13,8 +13,15 @@ module TaxCalculators
     }
   end
 
+  def self.compute_overall_taxes(income)
+    return 0.0 if income == 0
+    compute_all_taxes(income).values.sum
+  end
+
   def self.compute_overall_tax_rate(income)
-    total_tax = compute_all_taxes(income).values.sum
+    return 0.0 if income == 0
+
+    total_tax = compute_overall_taxes(income)
     total_tax / income.to_f
   end
 
@@ -35,6 +42,8 @@ module TaxCalculators
   def self.calculate_federal_tax(income)
     income -= FEDERAL_STANDARD_DEDUCTION
     income -= RETIREMENT_401K_LIMIT * 2
+
+    return 0.0 if income <= 0
 
     rates = FEDERAL_RATES.dup
     tax = []
@@ -70,6 +79,8 @@ module TaxCalculators
     income -= CALIFORNIA_STANDARD_DEDUCTION
     income -= RETIREMENT_401K_LIMIT * 2
 
+    return 0.0 if income <= 0
+
     rates = CALIFORNIA_RATES.dup
     tax = []
 
@@ -82,7 +93,7 @@ module TaxCalculators
       income -= gap
     end
 
-    tax.sum - CALIFORNIA_EXEMPTION_CREDITS
+    [tax.sum - CALIFORNIA_EXEMPTION_CREDITS, 0].max
   end
 
   # medicare constants
@@ -91,6 +102,8 @@ module TaxCalculators
   MEDICARE_ADDITIONAL_THRESHOLD = 250_000
 
   def self.calculate_medicare_tax(income)
+    raise "negative income" if income <= 0
+
     base_tax = income * MEDICARE_TAX_RATE
 
     additional_tax = if (income < MEDICARE_ADDITIONAL_THRESHOLD)
@@ -107,6 +120,8 @@ module TaxCalculators
   SOCIAL_SECURITY_TAX_RATE = 6.2/100.0
 
   def self.calculate_social_security_tax(income)
+    raise "negative income" if income <= 0
+
     income = [income, SOCIAL_SECURITY_MAX_WAGE].min
     income * SOCIAL_SECURITY_TAX_RATE
   end

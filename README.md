@@ -31,6 +31,14 @@ In this scenario, you don't have to put in any of your own money upfront. You si
     $ ruby main.rb
 
 
+# Model Assumptions
+
+* Assume married filing jointly tax status
+* Assume little to no base salary or RSU income in the final year when all options are exercised
+* Temporariliy ignore the "AMT balancing" method to postpone paying taxes until next Apr
+* Ignore state-level California AMT taxes upon ISO exercise
+* Assume one kid (increases California exemption credits from $288 to $666)
+
 # Pull Reqeusts
 
 If you can make this tool better, please do! Fork the repo, and submit a pull request for review. Bug fixes also welcome.
@@ -41,6 +49,8 @@ If you can make this tool better, please do! Fork the repo, and submit a pull re
   * This script assumes you're tax filing status is Married Filing Jointly. It would be nice to also support Single filing, as many young people in their 20s and early 30s are likely still unmarried.
 
   * Write unit tests :)
+
+  * Support more states than just California
 
 # Disclaimer
 
