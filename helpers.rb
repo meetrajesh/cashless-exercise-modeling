@@ -5,7 +5,9 @@ def cur(amount)
 end
 
 def num(number)
-  number.to_s.chars.reverse.each_slice(3).to_a.reverse.map(&:reverse).map(&:join).join(',')
+  tmp = number.abs.to_s.chars.reverse.each_slice(3).to_a.reverse.map(&:reverse).map(&:join).join(',')
+  tmp = "-#{tmp}" if number < 0
+  tmp
 end
 
 class Array

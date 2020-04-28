@@ -13,12 +13,31 @@ module TaxCalculators
     }
   end
 
+  def self.compute_tax_rate_on_stock_income_only(base_salary, total_income)
+    base_salary = integerize(base_salary)
+    total_income = integerize(total_income)
+
+    stock_income = total_income - base_salary
+    diff = compute_overall_taxes(total_income) - compute_overall_taxes(base_salary)
+    diff / stock_income.to_f
+  end
+
+  def self.integerize(income)
+    if income.is_a?(String)
+      income.gsub(/[^\d]/, '').to_i
+    else
+      income
+    end
+  end
+
   def self.compute_overall_taxes(income)
     return 0.0 if income == 0
     compute_all_taxes(income).values.sum
   end
 
   def self.compute_overall_tax_rate(income)
+    income = integerize(income)
+
     return 0.0 if income == 0
 
     total_tax = compute_overall_taxes(income)
@@ -40,6 +59,8 @@ module TaxCalculators
   }.freeze
 
   def self.calculate_federal_tax(income)
+    income = integerize(income)
+
     income -= FEDERAL_STANDARD_DEDUCTION
     income -= RETIREMENT_401K_LIMIT * 2
 
