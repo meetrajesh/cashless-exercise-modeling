@@ -10,6 +10,23 @@ def num(number)
   tmp
 end
 
+def print_paragraph(paragraph, max_chars_per_line=75)
+  cur_chars = 0
+  paragraph.gsub("\n", ' ').split(/\s+/).each do |word|
+    if (cur_chars + word.length) < max_chars_per_line
+      print word + ' '
+      cur_chars += word.length
+    else
+      puts
+      print word + ' '
+      cur_chars = word.length
+    end
+  end
+  puts
+  puts
+end
+
+
 class Array
   def sum(&proc)
     if proc

@@ -58,5 +58,4 @@ I (or any other contributor to this github repo) am **not** a tax professional, 
 
 These scripts are provided solely for personal use, and is not meant to be construes as financial or tax advice. Use this tool to simply get a general idea of your stock situation, and then go talk to a real Certified Financial Planner (CFP), CPA, or tax specialist before you make any decisions to sell, not sell, or exercise any stock options / shares. The scripts contained make a number of simplifying assumptions to keep the math from becoming too complicated. Be sure to update the math for your specific situation. All tax rates, thresholds, and amounts are as of 2020. Future rates and thresholds are likely to be different.
 
-This script also doesn't claim your company's stock price will always go up monotonically, even if it may assume it in some of the calculations to simplify the math.
-
+These scripts also don't claim your company's stock price will always go up monotonically, even if it may assume it in some of the calculations to simplify the math.
