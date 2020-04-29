@@ -29,8 +29,12 @@ module ExerciseAndHold
     bargain_element
   end
 
-  def exercise_time_value_of_shares
+  def exercise_time_value_of_options
     bargain_element
+  end
+
+  def value_of_exercised_and_held_shares
+    num_options_exercised_and_held * StockOptionGrant::EXERCISE_TIME_FMV
   end
 
   def tax_on_exercise_and_hold

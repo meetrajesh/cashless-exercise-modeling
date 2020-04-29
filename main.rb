@@ -42,17 +42,17 @@ puts "-" * 60
 puts "Difference (AMT owing): " + cur($final_added_amt)
 puts "-" * 60
 
-total_shares_sold    = GRANTS.sum(&:num_options_sold_immediately_on_exercise)
-total_shares_held    = GRANTS.sum(&:num_options_exercised_and_held)
-value_of_shares_sold = GRANTS.sum(&:pretax_flip_income)
-value_of_shares_held = GRANTS.sum(&:exercise_time_value_of_shares)
-percent_sold         = ((value_of_shares_sold / (value_of_shares_sold + value_of_shares_held).to_f) * 100.0).round
+total_shares_sold     = GRANTS.sum(&:num_options_sold_immediately_on_exercise)
+total_shares_held     = GRANTS.sum(&:num_options_exercised_and_held)
+value_of_options_sold = GRANTS.sum(&:pretax_flip_income)
+value_of_options_held = GRANTS.sum(&:exercise_time_value_of_options)
+percent_sold          = ((value_of_options_sold / (value_of_options_sold + value_of_options_held).to_f) * 100.0).round
 
 puts
 puts "Final money incoming (after AMT):    -----> " + cur(money_incoming - money_outgoing - $final_added_amt) + " <----- "
 puts
-puts "Value of Shares Sold: " + cur(value_of_shares_sold) + " (#{num(total_shares_sold)} shares)"
-puts "Value of Shares Held: " + cur(value_of_shares_held) + " (#{num(total_shares_held)} shares)"
+puts "Value of Shares Sold: " + cur(value_of_options_sold) + " (#{num(total_shares_sold)} shares)"
+puts "Value of Shares Held: " + cur(value_of_options_held) + " (#{num(total_shares_held)} shares)"
 puts "% sold:      -----> #{percent_sold}% <----- " 
 puts
 
