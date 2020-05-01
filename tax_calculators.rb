@@ -4,11 +4,14 @@
 # ASSUME 2020 tax rates, thresholds, and amounts
 module TaxCalculators
 
-  def self.compute_all_taxes(income)
+  def self.compute_all_taxes(income, num_incomes: 2)
+    raise "too many incomes" if num_incomes > 2
+    raise "too few incomes" if num_incomes < 1
+
     {
       federal: calculate_federal_tax(income),
       state: calculate_california_tax(income),
-      social_security: calculate_social_security_tax(income),
+      social_security: calculate_social_security_tax(income, num_incomes: num_incomes),
       medicare: calculate_medicare_tax(income),
     }
   end
@@ -138,11 +141,13 @@ module TaxCalculators
   SOCIAL_SECURITY_MAX_WAGE = 137_700
   SOCIAL_SECURITY_TAX_RATE = 6.2/100.0
 
-  def self.calculate_social_security_tax(income)
+  def self.calculate_social_security_tax(income, num_incomes: 2)
     raise "negative income" if income <= 0
+    raise "too many incomes" if num_incomes > 2
+    raise "too few incomes" if num_incomes < 1
 
     income = [income, SOCIAL_SECURITY_MAX_WAGE].min
-    income * SOCIAL_SECURITY_TAX_RATE
+    income * SOCIAL_SECURITY_TAX_RATE * num_incomes
   end
 
   # AMT constants

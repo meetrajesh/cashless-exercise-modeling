@@ -36,3 +36,9 @@ class Array
     end
   end
 end
+
+class String
+  def titleize
+    split(/[^a-z]+/i).map(&:capitalize).join(' ')
+  end
+end

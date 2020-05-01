@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'memoist'
 
 # EXERCISE AND HOLD METHODS
@@ -34,7 +33,7 @@ module ExerciseAndHold
   end
 
   def value_of_exercised_and_held_shares
-    num_options_exercised_and_held * StockOptionGrant::EXERCISE_TIME_FMV
+    num_options_exercised_and_held * @exercise_time_fmv
   end
 
   def tax_on_exercise_and_hold

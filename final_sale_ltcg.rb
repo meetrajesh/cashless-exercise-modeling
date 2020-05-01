@@ -7,7 +7,7 @@ module FinalSaleLTCG
   LTCG_TAX_RATE_FEDERAL = (17.91 + 3.28) / 100.0
 
   def cost_basis_after_exercise_and_hold
-    iso? ? @strike : StockOptionGrant::EXERCISE_TIME_FMV
+    iso? ? @strike : @exercise_time_fmv
   end
   memoize :cost_basis_after_exercise_and_hold
 

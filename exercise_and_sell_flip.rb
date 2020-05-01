@@ -22,4 +22,10 @@ module ExerciseAndSellFlip
     tax_rate = (nso? || rsu?) ? @overall_ordinary_income_tax_rate : iso_flip_income_tax_rate
     pretax_flip_income * tax_rate
   end
+
+  def iso_flip_income_tax_rate
+    raise if @overall_ordinary_income_tax_rate.nil? || @overall_ordinary_income_tax_rate <= 0
+    @overall_ordinary_income_tax_rate - ISO_FLIP_MEDICARE_DISCOUNT
+  end
+
 end  

@@ -28,21 +28,22 @@ class StockOptionGrant
     rsu: 'rsu',
   ).freeze
 
-  attr_reader :type, :num_options, :num_options_sold_immediately_on_exercise
+  attr_reader :type, :num_options, :num_options_sold_immediately_on_exercise, :exercise_time_fmv
   attr_accessor :overall_ordinary_income_tax_rate
 
-  def initialize(type:, strike:, num_options:, num_flipped_rightaway: nil)
+  def initialize(type:, strike:, num_options:, num_flipped_rightaway: nil, exercise_time_fmv: nil)
     @type = type
     @strike = strike
     @num_options = num_options
     @num_options_sold_immediately_on_exercise = num_flipped_rightaway || default_num_options_flipped_rightaway
+    @exercise_time_fmv = exercise_time_fmv || EXERCISE_TIME_FMV
 
     raise "too many options sold" if @num_options_sold_immediately_on_exercise > @num_options
     raise "bad type: #{type.inspect}" if !OPTION_TYPES.to_h.values.include?(type)
   end
 
   def option_value
-    EXERCISE_TIME_FMV - @strike
+    @exercise_time_fmv - @strike
   end
   memoize :option_value
 
@@ -60,11 +61,6 @@ class StockOptionGrant
 
   def rsu?
     @type == OPTION_TYPES.rsu
-  end
-
-  def iso_flip_income_tax_rate
-    raise if @overall_ordinary_income_tax_rate.nil? || @overall_ordinary_income_tax_rate <= 0
-    @overall_ordinary_income_tax_rate - ISO_FLIP_MEDICARE_DISCOUNT
   end
 
 end
