@@ -129,10 +129,12 @@ class TaxReturn
 end
 
 
+# example calls
+
 tax = TaxReturn.new
 tax.add_base_salary(200E3) # assume 19.5k 401(k) contribution
 tax.add_base_salary(150E3) # assume 19.5k 401(k) contribution
 tax.exercise_iso(num: 5_208, strike: 3.84, current_fmv: 16.10)
 tax.flip_nso(num: 2_264, strike: 3.84, current_fmv: 16.10)
-# tax.vest_rsu(num: 2_264, current_fmv: 16.10)
+tax.vest_rsu(num: 2_264, current_fmv: 16.10)
 tax.print_results
