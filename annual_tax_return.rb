@@ -15,6 +15,7 @@ class TaxReturn
 
   def add_base_salary(base_salary)
     raise "can't have more than 2 base salaries" if @base_salaries.size >= 2
+
     @base_salaries << base_salary
   end    
 
@@ -79,6 +80,7 @@ class TaxReturn
     puts
     puts "AMT Tax: #{cur(extra_amt_tax)} (#{amt_tax_pct.round(1)}%)"
     puts
+    puts
 
     puts "SUMMARY"
     puts "=" * 20
@@ -107,8 +109,8 @@ class TaxReturn
 end
 
 
-# tax = TaxReturn.new
-# tax.add_base_salary(200E3)
-# tax.add_base_salary(150E3)
-# tax.exercise_iso(num: 5_208, strike: 3.84, current_fmv: 16.10)
-# tax.print_results
+tax = TaxReturn.new
+tax.add_base_salary(200E3)
+tax.add_base_salary(150E3)
+tax.exercise_iso(num: 5_208, strike: 3.84, current_fmv: 16.10)
+tax.print_results

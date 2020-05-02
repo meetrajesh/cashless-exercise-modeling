@@ -45,7 +45,7 @@ module TaxCalculators
     total_tax / income.to_f
   end
 
-  RETIREMENT_401K_LIMIT = 19_500  # 401k tax deductions
+  RETIREMENT_401K_LIMIT = 19_500 # 401k tax deductions
 
   # federal tax constants
   FEDERAL_STANDARD_DEDUCTION = 24_800
