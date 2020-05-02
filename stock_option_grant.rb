@@ -38,6 +38,7 @@ class StockOptionGrant
     @num_options_sold_immediately_on_exercise = num_flipped_rightaway || default_num_options_flipped_rightaway
     @exercise_time_fmv = exercise_time_fmv || EXERCISE_TIME_FMV
 
+    raise "RSU with non-zero strike" if rsu? && @strike > 0
     raise "too many options sold" if @num_options_sold_immediately_on_exercise > @num_options
     raise "bad type: #{type.inspect}" if !OPTION_TYPES.to_h.values.include?(type)
   end

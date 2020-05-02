@@ -17,11 +17,18 @@ class TaxReturn
     raise "can't have more than 2 base salaries" if @base_salaries.size >= 2
 
     @base_salaries << base_salary
-  end    
-
-  def vest_rsu(num, current_fmv:)
-    @stock_actions << StockOptionGrant.new(type: StockOptionGrant::OPTION_TYPES.rsu, strike: 0, num_options: num)
   end
+
+  def vest_rsu(num:, current_fmv:)
+    @stock_actions << StockOptionGrant.new(
+      type: StockOptionGrant::OPTION_TYPES.rsu,
+      strike: 0,
+      num_options: num,
+      exercise_time_fmv: current_fmv,
+      num_flipped_rightaway: 0,
+    )
+  end
+  alias_method :flip_rsu, :vest_rsu # same tax consequence
 
   def exercise_nso(num:, strike:, current_fmv:)
     @stock_actions << StockOptionGrant.new(
@@ -32,6 +39,7 @@ class TaxReturn
       num_flipped_rightaway: 0,
     )
   end
+  alias_method :flip_nso, :exercise_nso # same tax consequence
 
   def exercise_iso(num:, strike:, current_fmv:)
     @stock_actions << StockOptionGrant.new(
@@ -43,13 +51,18 @@ class TaxReturn
     )
   end
 
-  def flip_iso(num:, strike:)
-  end
-
-  def flip_nso(num:, strike:)
+  def flip_iso(num:, strike:, current_fmv:)
+    @stock_actions << StockOptionGrant.new(
+      type: StockOptionGrant::OPTION_TYPES.iso,
+      strike: strike,
+      num_options: num,
+      exercise_time_fmv: current_fmv,
+      num_flipped_rightaway: num,
+    )
   end
 
   def print_results
+    total_stock_income = total_regular_income - total_base_salary
     regular_taxes = TaxCalculators.compute_all_taxes(total_regular_income)
 
     if @base_salaries.size == 2
@@ -66,7 +79,9 @@ class TaxReturn
     puts "INCOME"
     puts "=" * 20
     puts "Base Salary: #{cur(total_base_salary)} (#{base_salaries.map { |s| cur(s) }.join(' + ')})"
-    puts "Stock Income: #{cur(total_regular_income - total_base_salary)}"
+    puts "Stock Income: #{cur(total_stock_income)}"
+    puts "Total Regular Income: #{cur(total_regular_income)} (#{cur(total_base_salary)} + #{cur(total_stock_income)})"
+    puts
     puts "ISO Extra Income (for AMT): #{cur(amt_extra_income)}"
     puts
     puts
@@ -97,12 +112,17 @@ class TaxReturn
   memoize :total_base_salary
 
   def total_regular_income
-    total_base_salary + @stock_actions.sum { |g| g.pretax_flip_income + g.nso_rsu_pretax_exercise_income }
+    total_base_salary + stock_regular_income
   end
   memoize :total_regular_income
 
+  def stock_regular_income
+    @stock_actions.sum { |g| g.pretax_flip_income + g.nso_rsu_pretax_exercise_income }
+  end
+  memoize :stock_regular_income
+
   def amt_extra_income
-    @stock_actions.sum(&:income_for_amt_calculation)
+    @stock_actions.sum(&:income_for_amt_calculation) - stock_regular_income
   end
   memoize :amt_extra_income
 
@@ -110,7 +130,9 @@ end
 
 
 tax = TaxReturn.new
-tax.add_base_salary(200E3)
-tax.add_base_salary(150E3)
+tax.add_base_salary(200E3) # assume 19.5k 401(k) contribution
+tax.add_base_salary(150E3) # assume 19.5k 401(k) contribution
 tax.exercise_iso(num: 5_208, strike: 3.84, current_fmv: 16.10)
+tax.flip_nso(num: 2_264, strike: 3.84, current_fmv: 16.10)
+# tax.vest_rsu(num: 2_264, current_fmv: 16.10)
 tax.print_results
