@@ -148,14 +148,13 @@ module TaxCalculators
 
   def self.calculate_social_security_tax(income, num_incomes: 2)
     raise "negative income" if income <= 0
-    raise "too many incomes" if num_incomes > 2
-    raise "too few incomes" if num_incomes < 1
+    check_num_incomes!(num_incomes)
 
     income = [income, SOCIAL_SECURITY_MAX_WAGE].min
     income * SOCIAL_SECURITY_TAX_RATE * num_incomes
   end
 
-  # AMT constants
+  # AMT constants for 2020
   AMT_EXEMPTION_AMOUNT = 113_400
   AMT_PHASEOUT_THRESHOLD = 1_036_800
   AMT_HIGHER_PERCENT_RATE_THRESHOLD = 197_900
