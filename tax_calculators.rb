@@ -154,10 +154,27 @@ module TaxCalculators
     income * SOCIAL_SECURITY_TAX_RATE * num_incomes
   end
 
-  # AMT constants for 2020
+  # AMT constants for 2020 (married filing jointly)
   AMT_EXEMPTION_AMOUNT = 113_400
   AMT_PHASEOUT_THRESHOLD = 1_036_800
   AMT_HIGHER_PERCENT_RATE_THRESHOLD = 197_900
+
+  # # AMT constants for 2020 (single)
+  # AMT_EXEMPTION_AMOUNT = 72_900
+  # AMT_PHASEOUT_THRESHOLD = 518_400
+  # AMT_HIGHER_PERCENT_RATE_THRESHOLD = 197_900
+
+  # # AMT constants for 2019 (CA married)
+  # # from https://www.calcpa.org/~/media/california%20cpa%20magazine/1119/1119fasttaxfacts.pdf?la=en
+  # AMT_EXEMPTION_AMOUNT = 98_330
+  # AMT_PHASEOUT_THRESHOLD = 368_737
+  # AMT_HIGHER_PERCENT_RATE_THRESHOLD = nil
+
+  # # AMT constants for 2019 (CA single)
+  # # from https://www.calcpa.org/~/media/california%20cpa%20magazine/1119/1119fasttaxfacts.pdf?la=en
+  # AMT_EXEMPTION_AMOUNT = 73_748
+  # AMT_PHASEOUT_THRESHOLD = 276_552
+  # AMT_HIGHER_PERCENT_RATE_THRESHOLD = nil
 
   def self.calculate_tentative_minimum_tax(amt_income)
     return 0 if amt_income < AMT_EXEMPTION_AMOUNT
